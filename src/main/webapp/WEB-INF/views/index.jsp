@@ -11,7 +11,9 @@
 </head>
 <body>
 
-  <a href="${contextPath}/notice/list.do">공지사항</a>
-  
+  <div>
+    <h3><a href="${contextPath}/notice/list.do">공지사항</a></h3>
+  </div>
+
 </body>
 </html>

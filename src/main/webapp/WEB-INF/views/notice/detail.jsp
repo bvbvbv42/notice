@@ -8,101 +8,70 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script>
-
-  $(function(){    
-    fnInit();
-    fnEdit();
-    fnRemove();
-    fnList();
-    fnBack();
-  })
-
-  function fnInit(){    
-    $('#edit_screen').hide();
-    $('#gubun').val(${notice.gubun});
-    var modifyResult = '${modifyResult}';
-    if(modifyResult != '') {
-      if(modifyResult == '1'){
-        alert('공지사항이 수정되었습니다.');
-      } else {
-        alert('공지사항이 수정되지 않았습니다.');
-      }
-    }
-  }
-  
-  function fnEdit(){
-	$('#btn_edit').click(function(){		
-      $('#edit_screen').show();
-      $('#detail_screen').hide();
-	})
-  }
-  
-  function fnRemove(){
-	$('#btn_remove').click(function(){		
-      if(confirm('공지사항을 삭제할까요?')){
-        location.href = '${contextPath}/notice/remove.do?notice_no=${notice.notice_no}';
-      }
-	})
-  }
-  
-  function fnList(){
-	$('.btn_list').click(function(){		
-      location.href = '${contextPath}/notice/list.do';
-	})
-  }
-  
-  function fnBack(){
-	$('#back').click(function(){		
-      $('#edit_screen').hide();
-      $('#detail_screen').show();
-	})
-  }
-
-</script>
 </head>
 <body>
 
-  <div id="detail_screen">
-    <h1>${notice.notice_no}번 공지사항</h1>
-    <div>구분 : ${notice.gubun == 1 ? '긴급' : '일반'}</div>
-    <div>제목 : ${notice.title}</div>
-    <div>${notice.content}</div>
-    <hr>
+  <div id="a">
+    <h1>공지 상세화면</h1>
+    <h3>공지번호 : ${notice.noticeNo}</h3>
+    <h3>구분 : ${notice.gubun == 1 ? '긴급' : '일반'}</h3>
+    <h3>제목 : ${notice.title}</h3>
+    <h3>내용 : ${notice.content}</h3>
     <div>
-      <button type="button" id="btn_edit">편집</button>
-      <button type="button" id="btn_remove">삭제</button>
-      <button type="button" class="btn_list">목록</button>
+      <button type="button" id="btn_edit">편집하러가기</button>
     </div>
   </div>
   
-  <div id="edit_screen">
-    <div style="cursor: pointer;" id="back">← 뒤로 가기</div>
-    <h1>공지사항 편집하기</h1>
+  <div id="b">
+    <div>
+      <button type="button" id="btn_back">뒤로가기</button>
+    </div>
     <form method="post" action="${contextPath}/notice/modify.do">
-      <div>
-        <label for="gubun">구분</label>
-        <select id="gubun" name="gubun">
-          <option value="1">긴급</option>
-          <option value="2">일반</option>          
-        </select>
-      </div>
-      <div>
-        <label for="title">제목</label>
-        <input type="text" id="title" name="title" value="${notice.title}">
-      </div>
-      <div>
-        <div><label for="content">내용</label></div>
-        <textarea id="content" name="content" rows="5" cols="30">${notice.content}</textarea>
-      </div>
-      <hr>
-      <div>
-        <input type="hidden" name="notice_no" value="${notice.notice_no}">
-        <button type="submit">편집완료</button>
-        <button type="button" class="btn_list">목록</button>
-      </div>
+      <select name="gubun" id="gubun">
+        <option value="2">일반</option>
+        <option value="1">긴급</option>
+      </select>
+      <input type="text" name="title" id="title">
+      <input type="text" name="content" id="content">
+      <input type="hidden" name="noticeNo" id="noticeNo">
+      <button>편집완료</button>
     </form>
+    <script>
+      $('#gubun').val('${notice.gubun}');
+      $('#title').val('${notice.title}');
+      $('#content').val('${notice.content}');
+      $('#noticeNo').val('${notice.noticeNo}');
+    </script>
   </div>
+
+  <script>
   
+    // 초기 화면
+    $('#a').show();
+    $('#b').hide();
+    
+    // 편집하러가기 클릭
+    $('#btn_edit').click(function(){
+    	$('#a').hide();
+    	$('#b').show();
+    })
+    
+    // 뒤로가기 클릭
+    $('#btn_back').click(function(){
+      $('#a').show();
+      $('#b').hide();
+    })
+    
+    var modifyResult = '${modifyResult}';  // '', '1', '0'
+    if(modifyResult !== ''){
+    	if(modifyResult === '1'){
+    		alert('공지사항이 수정되었습니다.');
+    	} else {
+    		alert('공지사항이 수정되지 않았습니다.');
+    	}
+    }
+    
+  </script>
+
 </body>
 </html>
