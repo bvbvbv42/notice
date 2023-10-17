@@ -2,30 +2,14 @@ package com.gdu.myapp.service;
 
 import java.util.List;
 
-import com.gdu.myapp.dao.NoticeDAO;
-import com.gdu.myapp.dto.NoticeDTO;
+import javax.servlet.http.HttpServletRequest;
 
-public class NoticeService {
-    private NoticeDAO noticeDAO;
+import com.gdu.myapp.dto.NoticeDto;
 
-    public void createNotice(NoticeDTO notice) {
-        noticeDAO.createNotice(notice);
-    }
-
-    public NoticeDTO getNoticeById(int no) {
-        return noticeDAO.getNoticeById(no);
-    }
-
-    public List<NoticeDTO> getAllNotices() {
-        return noticeDAO.getAllNotices();
-    }
-
-    public void updateNotice(NoticeDTO notice) {
-        noticeDAO.updateNotice(notice);
-    }
-
-    public void deleteNotice(int id) {
-        noticeDAO.deleteNotice(id);
-    }
+public interface NoticeService {
+  public List<NoticeDto> getNoticeList();
+  public NoticeDto getNotice(HttpServletRequest request);
+  public int addNotice(HttpServletRequest request);
+  public int modifyNotice(HttpServletRequest request);
+  public int removeNotice(HttpServletRequest request);
 }
-
